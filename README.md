@@ -1,1 +1,1 @@
-# HazelGE
+# Hazel
