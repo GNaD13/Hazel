@@ -6,7 +6,7 @@
 
 namespace Hazel {
 
-	Hazel::Scope<Renderer::SceneData> Renderer::m_SceneData = std::make_unique<Renderer::SceneData>();
+	Scope<Renderer::SceneData> Renderer::m_SceneData = std::make_unique<Renderer::SceneData>();
 	//Renderer::SceneData* Renderer::m_SceneData = new Renderer::SceneData;
 
 	void Renderer::Init()
