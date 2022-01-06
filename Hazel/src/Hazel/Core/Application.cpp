@@ -28,10 +28,7 @@ namespace Hazel {
 
 	Application::~Application()
 	{
-		for (Layer* layer : m_LayerStack)
-		{
-			layer->OnDetach();
-		}
+
 	}
 
 	void Application::PushLayer(Layer* layer)
