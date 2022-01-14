@@ -3,7 +3,7 @@
 #include "Hazel/Core/Log.h"
 #include "Hazel/Core/Input.h"
 #include "Hazel/Renderer/Renderer.h"
-
+#include "Hazel/Renderer/Renderer2D.h"
 #include "GLFW/glfw3.h"
 
 namespace Hazel {
@@ -21,6 +21,7 @@ namespace Hazel {
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
 		Renderer::Init();
+		Renderer2D::Init();
 
 		//m_ImGuiLayer = std::make_unique<ImGuiLayer>();
 		m_ImGuiLayer = new ImGuiLayer();
@@ -29,7 +30,7 @@ namespace Hazel {
 
 	Application::~Application()
 	{
-
+		Renderer2D::Shutdown();
 	}
 
 	void Application::PushLayer(Layer* layer)

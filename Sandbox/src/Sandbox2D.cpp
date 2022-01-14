@@ -32,6 +32,7 @@ void Sandbox2D::OnUpdate(Hazel::Timestep ts)
 		m_CameraController.OnUpdate(ts);
 	}
 
+	Hazel::Renderer2D::ResetStats();
 	{
 		HZ_PROFILE_SCOPE("Renderer Prep");
 		Hazel::RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
@@ -46,9 +47,19 @@ void Sandbox2D::OnUpdate(Hazel::Timestep ts)
 		Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
 		Hazel::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, m_SquareColor);
 		Hazel::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-		Hazel::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerBoardTexture, 10.0f);
+		Hazel::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.5f, 10.5f }, m_CheckerBoardTexture, 10.0f);
 		Hazel::Renderer2D::DrawRotatedQuad({ 1.0f, 0.0f }, { 0.8f, 0.8f }, rotation, { 0.9f, 0.3f, 0.5f, 1.0f });
 		Hazel::Renderer2D::DrawRotatedQuad({ -2.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, rotation, m_CheckerBoardTexture, 20.0f);
+
+		for (float x = -5.0f; x <= 5.0f; x += 0.5f)
+		{
+			for (float y = -5.0f; y <= 5.0f; y += 0.5f)
+			{
+				glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.5f };
+				Hazel::Renderer2D::DrawQuad({ x, y }, { 0.45, 0.45 }, color);
+			}
+		}
+
 		Hazel::Renderer2D::EndScene();
 	}
 
@@ -59,7 +70,15 @@ void Sandbox2D::OnUpdate(Hazel::Timestep ts)
 void Sandbox2D::OnImGuiRender()
 {
 	HZ_PROFILE_FUNCTION();
+
+	Hazel::Renderer2D::Statistic stats = Hazel::Renderer2D::GetStats();
+
 	ImGui::Begin("Settings");
+	ImGui::Text("DrawInfor");
+	ImGui::Text("Quad: %d", stats.QuadCount);
+	ImGui::Text("DrawCall: %d", stats.DrawCalls);
+	ImGui::Text("Vertex: %d", stats.GetQuadVertexCount());
+	ImGui::Text("Index: %d", stats.GetQuadIndexCount());
 	ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 	ImGui::End();
 }

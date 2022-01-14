@@ -12,7 +12,7 @@ namespace Hazel {
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
-		Renderer2D::Init();
+		/*Renderer2D::Init();*/
 	}
 
 	void Renderer::BeginScene(OrthographicCamera& camera)
